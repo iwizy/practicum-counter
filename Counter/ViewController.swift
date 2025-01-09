@@ -10,13 +10,6 @@ final class ViewController: UIViewController {
     // создаем переменную для счетчика
     private var counter: Int = 0
     
-    // аутлеты для интерфейсных элементов
-    @IBOutlet private weak var counterLabel: UILabel!
-    @IBOutlet private weak var logTextView: UITextView!
-    @IBOutlet private weak var decrementButton: UIButton!
-    @IBOutlet private weak var incrementButton: UIButton!
-    @IBOutlet private weak var resetButton: UIButton!
-    
     // функция для форматирования даты
     private func getDate() -> String {
         let date = Date.now
@@ -24,6 +17,12 @@ final class ViewController: UIViewController {
         dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
         let formattedDate = dateFormatter.string(from: date)
         return formattedDate
+    }
+    
+    // скролл после добавления строки, если она выходит за границы контроллера
+    private func scrollToRange() {
+        let range = NSMakeRange(logTextView.text.count - 1, 1)
+        logTextView.scrollRangeToVisible(range)
     }
     
     // свойство для получения текущей даты и времени
@@ -35,12 +34,12 @@ final class ViewController: UIViewController {
         counterLabel.text = "\(counter)" // проставляем начальное значение счетчика
     }
     
-    // скролл после добавления строки, если она выходит за границы контроллера
-    private func scrollToRange() {
-        let range = NSMakeRange(logTextView.text.count - 1, 1)
-        logTextView.scrollRangeToVisible(range)
-    }
-    
+    // аутлеты для интерфейсных элементов
+    @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var logTextView: UITextView!
+    @IBOutlet private weak var decrementButton: UIButton!
+    @IBOutlet private weak var incrementButton: UIButton!
+    @IBOutlet private weak var resetButton: UIButton!
     
     @IBAction private func decrementDidTap(_ sender: Any) {
         if counter > 0 { // проверяем не меньше ли нуля
